@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#blocklyDiv {
+  --border-radius: 5px;
+  --border-width: 2px;
+  border: var(--border-width) solid rgb(0, 0, 0, 0.5);
+  border-radius: var(--border-radius);
+  height: 70vh;
+  width: 100%;
+}
+
+#output {
+  --border-radius: 5px;
+  --border-width: 2px;
+  border: var(--border-width) solid rgb(0, 0, 0, 0.5);
+  border-radius: var(--border-radius);
+  height: 70vh;
+  width: 400px;
+}
+
+#sandbox-container {
+  display: flex;
+  align-items: center;
+}
+
+#blocklyDiv .injectionDiv {
+  border-radius: calc(var(--border-radius) - var(--border-width));
+  overflow: hidden;
+}
