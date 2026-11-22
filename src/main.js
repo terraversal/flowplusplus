@@ -1,32 +1,46 @@
 // @ts-ignore
 import * as Blockly from "blockly";
-import "blockly/blocks";
+import * as libraryBlocks from "blockly/blocks";
 import * as En from "blockly/msg/en";
 import { javascriptGenerator, Order } from "blockly/javascript";
 import Interpreter from "js-interpreter";
 
+const nameDialog = document.getElementById("naming-dialog");
+const nameTextArea = document.getElementById("naming-textarea");
+const prompt = document.getElementById("prompt");
+const okBtn = document.getElementById("ok-button");
+const cancelBtn = document.getElementById("cancel-button");
+
 const customTheme = Blockly.Theme.defineTheme("customTheme", {
   base: Blockly.Themes.Classic,
-  // 1. Style groups of blocks
   blockStyles: {
     logic_blocks: {
-      colourPrimary: "#ff3300", // Main block color
-      colourSecondary: "#6b1200", // Shadow block color
-      colourTertiary: "#270b0b", // Border / highlight color
+      colourPrimary: "#ff3300",
+      colourSecondary: "#6b1200",
+      colourTertiary: "#270b0b",
+    },
+    text_blocks: {
+      colourPrimary: "#dc9be2",
+      colourSecondary: "#690048",
+      colourTertiary: "#270b21",
+    },
+    variable_blocks: {
+      colourPrimary: "#1900bc",
+      colourSecondary: "#070069",
+      colourTertiary: "#0b1327",
     },
   },
-  // 2. Style toolbox categories
+
   categoryStyles: {
     logic_category: {
       colour: "#4a148c",
     },
   },
-  // 3. Style workspace & UI components
   componentStyles: {
     workspaceBackgroundColour: "#241f1d",
-    toolboxBackgroundColour: "#252526",
+    toolboxBackgroundColour: "#383838",
     toolboxForegroundColour: "#ffffff",
-    flyoutBackgroundColour: "#333333",
+    flyoutBackgroundColour: "#6a6a6a",
     flyoutForegroundColour: "#cccccc",
     flyoutOpacity: 0.9,
     scrollbarColour: "#797979",
@@ -105,17 +119,45 @@ const toolbox = {
         VAR: { name: "score" },
       },
     },
+    {
+      kind: "block",
+      type: "text_prompt_ext",
+      inputs: {
+        TEXT: {
+          shadow: {
+            type: "text",
+            fields: {
+              TEXT: "Enter a value:",
+            },
+          },
+        },
+      },
+    },
   ],
 };
 
-function initApi(interpreter, globalObject) {
-  output.textContent = "";
+nameDialog.showModal();
 
-  const wrapper = function (text) {
+function initApi(interpreter, globalObject) {
+  const alertWrapper = function (text) {
+    prompt.textContent = "Enter a value: ";
+    nameDialog.showModal();
+  };
+  const promptWrapper = function (text) {
+    prompt.textContent = "Enter a value: ";
+    nameDialog.showModal();
+  };
+
+  const printWrapper = function (text) {
     output.textContent += (text !== undefined ? text : "") + "\n";
   };
 
-  interpreter.setProperty(globalObject, "print", interpreter.createNativeFunction(wrapper));
+  output.textContent = "";
+  interpreter.setProperty(globalObject, "prompt", interpreter.createNativeFunction(promptWrapper));
+
+  interpreter.setProperty(globalObject, "alert", interpreter.createNativeFunction(alertWrapper));
+
+  interpreter.setProperty(globalObject, "print", interpreter.createNativeFunction(printWrapper));
 }
 
 const workspace = Blockly.inject("blocklyDiv", {
@@ -137,4 +179,12 @@ runBtn.addEventListener("click", () => {
       break;
     }
   }
+});
+
+okBtn.addEventListener("click", () => {
+  nameDialog.close();
+});
+
+cancelBtn.addEventListener("click", () => {
+  nameDialog.close();
 });
