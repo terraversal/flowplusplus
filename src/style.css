@@ -7,7 +7,9 @@ body {
   --border-width: 2px;
   border: var(--border-width) solid rgb(0, 0, 0, 0.5);
   border-radius: var(--border-radius);
-  height: 70vh;
+  height: 50vh;
+  resize: vertical;
+  overflow: auto;
   width: 100%;
 }
 
@@ -16,7 +18,7 @@ body {
   --border-width: 2px;
   border: var(--border-width) solid rgb(0, 0, 0, 0.5);
   border-radius: var(--border-radius);
-  height: 70vh;
+  height: 30vh;
   width: 400px;
 }
 
@@ -31,7 +33,6 @@ body {
 }
 
 #naming-dialog {
-  display: grid;
   align-items: center;
   justify-content: left;
   border: none;
@@ -49,4 +50,17 @@ body {
 #naming-dialog > button {
   width: 50px;
   height: 50px;
+}
+
+dialog[open] {
+  display: grid;
+}
+
+#canvas {
+  --border-radius: 5px;
+  --border-width: 2px;
+  border: var(--border-width) solid rgb(0, 0, 0, 0.5);
+  border-radius: var(--border-radius);
+  height: 30vh;
+  width: 100%;
 }

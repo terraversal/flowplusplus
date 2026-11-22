@@ -54,6 +54,7 @@ const stopBtn = document.getElementById("stopBtn");
 const blocklyDiv = document.getElementById("blocklyDiv");
 const output = document.getElementById("output");
 
+let userInput = "";
 javascriptGenerator.forBlock["text_print"] = function (block, generator) {
   const msg = generator.valueToCode(block, "TEXT", Order.NONE) || "''";
   return `print(${msg});\n`;
@@ -136,8 +137,6 @@ const toolbox = {
   ],
 };
 
-nameDialog.showModal();
-
 function initApi(interpreter, globalObject) {
   const alertWrapper = function (text) {
     prompt.textContent = "Enter a value: ";
@@ -147,7 +146,6 @@ function initApi(interpreter, globalObject) {
     prompt.textContent = "Enter a value: ";
     nameDialog.showModal();
   };
-
   const printWrapper = function (text) {
     output.textContent += (text !== undefined ? text : "") + "\n";
   };
@@ -169,6 +167,7 @@ const workspace = Blockly.inject("blocklyDiv", {
 });
 
 runBtn.addEventListener("click", () => {
+  userInput = "";
   const code = javascriptGenerator.workspaceToCode(workspace);
   const myInterpreter = new Interpreter(code, initApi);
 
@@ -182,9 +181,11 @@ runBtn.addEventListener("click", () => {
 });
 
 okBtn.addEventListener("click", () => {
+  userInput = nameTextArea.value;
   nameDialog.close();
 });
 
 cancelBtn.addEventListener("click", () => {
+  userInput = nameTextArea.value;
   nameDialog.close();
 });

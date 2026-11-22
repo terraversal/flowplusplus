@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <h1>Flow++</h1>
-    <p>Welcome to Flow++, an open-source block-based version of Rust.</p>
+    <details>
+      <summary>About</summary>
+      <h1>Flow++</h1>
+      <p>Welcome to Flow++, an open-source block-based version of Rust.</p>
+    </details>
     <button id="runBtn">Run</button>
     <button id="stopBtn">Stop</button>
+    <div id="blocklyDiv"></div>
     <div id="sandbox-container">
-      <div id="blocklyDiv"></div>
+      <canvas id="canvas" width="700" height="700"></canvas>
       <pre id="output"></pre>
     </div>
     <dialog id="naming-dialog">
